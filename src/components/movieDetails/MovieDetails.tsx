@@ -89,7 +89,7 @@ function MovieDetails(props: any) {
           <View style={styles.movieDetailsImageiew}>
             <Image
               source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }}
-              style={{ width: 200, height: 200, resizeMode: 'contain' }}
+              style={{ width: 300, height: 300, resizeMode: 'contain' }}
             />
           </View>
           <Text style={styles.movieDetailsTitle}>{title}</Text>
@@ -102,7 +102,7 @@ function MovieDetails(props: any) {
               <Text style={styles.movieDetailsDescriptionTitle}>Vote Count: </Text>
               <Text style={styles.movieDetailsDescriptionTitle}>Popularity: </Text>
             </View>
-            <View style={{ flexDirection: 'column' }}>
+            <View style={{ flexDirection: 'column', marginLeft: 5 }}>
               <Text style={styles.movieDetailsDescription}>{releaseDate}</Text>
               <Text style={styles.movieDetailsDescription}>{voteAverage}</Text>
               <Text style={styles.movieDetailsDescription}>{voteCount}</Text>

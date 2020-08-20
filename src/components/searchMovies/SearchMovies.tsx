@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Image, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { FontAwesome } from '@expo/vector-icons';
 import axios from 'axios';
 import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
@@ -50,6 +51,20 @@ function MoviesItem(props: any) {
     });
   };
 
+  const renderRatingStar = (voteAverage: number) => {
+    const ratingStar = [];
+
+    for (let i = 0; i < voteAverage / 2; i++) {
+      ratingStar.push(<FontAwesome key={i} name="star" size={18} color="#e5e500" style={{ marginHorizontal: 1 }} />);
+    }
+
+    if (ratingStar.length < 5) {
+      ratingStar.push(<FontAwesome name="star-o" size={18} color="black" style={{ marginHorizontal: 1 }} />);
+    }
+
+    return ratingStar;
+  };
+
   return (
     <Card style={styles.moviesItemCard}>
       <TouchableOpacity onPress={() => handleMovieItemsClick()}>
@@ -60,7 +75,9 @@ function MoviesItem(props: any) {
           />
           <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10 }}>
             <Text style={styles.moviesItemTitle}>{props.item.title}</Text>
-            <Text>5</Text>
+            <View style={{ flexDirection: 'row', marginVertical: 10 }}>
+              {renderRatingStar(props.item.vote_average)}
+            </View>
           </View>
         </View>
       </TouchableOpacity>
