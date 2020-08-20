@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import SearchMovies from '../searchMovies/SearchMovies';
-import MoviesDetails from '../moviesDetails/MoviesDetails';
+import MovieDetails from '../movieDetails/MovieDetails';
 
 const Stack = createStackNavigator();
 
@@ -21,7 +21,7 @@ function MoviesView() {
         }}
       >
         <Stack.Screen name="Movies" component={SearchMovies} />
-        <Stack.Screen name="Movies Details" component={MoviesDetails} />
+        <Stack.Screen name="Movie Details" component={MovieDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );

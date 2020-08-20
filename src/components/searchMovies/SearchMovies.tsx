@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, ScrollView, FlatList, TouchableOpacity, Image, Text } from 'react-native';
-import { TextInput, Card } from 'react-native-paper';
+import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Image, Text } from 'react-native';
+import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { TMDB_API_KEY } from 'react-native-dotenv';
@@ -21,20 +21,20 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 35,
   },
+  searchTextTextInput: {
+    borderColor: 'black',
+    borderRadius: 5,
+    borderWidth: 1,
+    padding: 15,
+  },
   moviesItemCard: {
     paddingHorizontal: 30,
     paddingVertical: 20,
     marginVertical: 15,
   },
-  moviesItemImageiew: {
-    alignItems: 'center',
-  },
   moviesItemTitle: {
-    textAlign: 'center',
-    fontSize: 25,
+    fontSize: 15,
     fontWeight: 'bold',
-    marginTop: 15,
-    marginBottom: 10,
   },
   dividerStyle: {
     marginVertical: 5,
@@ -45,7 +45,7 @@ function MoviesItem(props: any) {
   const navigation = useNavigation();
 
   const handleMovieItemsClick = () => {
-    navigation.navigate('Movies Details', {
+    navigation.navigate('Movie Details', {
       movieId: props.item.id,
     });
   };
@@ -53,14 +53,17 @@ function MoviesItem(props: any) {
   return (
     <Card style={styles.moviesItemCard}>
       <TouchableOpacity onPress={() => handleMovieItemsClick()}>
-        <View style={styles.moviesItemImageiew}>
+        <View style={{ flexDirection: 'row' }}>
           <Image
             source={{ uri: `https://image.tmdb.org/t/p/w500${props.item.poster_path}` }}
-            style={{ width: 200, height: 200, resizeMode: 'contain' }}
+            style={{ width: 80, height: 120, resizeMode: 'stretch' }}
           />
+          <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10 }}>
+            <Text style={styles.moviesItemTitle}>{props.item.title}</Text>
+            <Text>5</Text>
+          </View>
         </View>
       </TouchableOpacity>
-      <Text style={styles.moviesItemTitle}>{props.item.title}</Text>
     </Card>
   );
 }
@@ -137,7 +140,9 @@ function SearchMovies(props: any) {
       <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
         <TextInput
-          label="Enter some text..."
+          style={styles.searchTextTextInput}
+          placeholder="Enter some text..."
+          placeholderTextColor="black"
           value={searchText}
           onChangeText={(text: string) => handleSearchTextChange(text)}
         />

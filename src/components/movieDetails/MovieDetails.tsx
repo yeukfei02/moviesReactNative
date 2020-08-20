@@ -18,38 +18,34 @@ const styles = StyleSheet.create({
     marginHorizontal: 30,
     marginVertical: 35,
   },
-  moviesDetailsCard: {
+  movieDetailsCard: {
     paddingHorizontal: 30,
     paddingVertical: 20,
   },
-  moviesDetailsImageiew: {
+  movieDetailsImageiew: {
     alignItems: 'center',
   },
-  moviesDetailsTitle: {
+  movieDetailsTitle: {
     textAlign: 'center',
     fontSize: 25,
     fontWeight: 'bold',
     marginTop: 20,
   },
-  moviesDetailsOverview: {
+  movieDetailsOverview: {
     textAlign: 'center',
     fontSize: 18,
     marginVertical: 15,
   },
-  moviesDetailsDescriptionView: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
-  moviesDetailsDescriptionTitle: {
+  movieDetailsDescriptionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
   },
-  moviesDetailsDescription: {
+  movieDetailsDescription: {
     fontSize: 18,
   },
 });
 
-function MoviesDetails(props: any) {
+function MovieDetails(props: any) {
   const [posterPath, setPosterPath] = useState('');
   const [title, setTitle] = useState('');
   const [overview, setOverview] = useState('');
@@ -60,11 +56,11 @@ function MoviesDetails(props: any) {
 
   useEffect(() => {
     if (props.route.params) {
-      getMoviesDetails(props.route.params.movieId);
+      getMovieDetails(props.route.params.movieId);
     }
   }, [props.route.params.movieId]);
 
-  const getMoviesDetails = async (id: number) => {
+  const getMovieDetails = async (id: number) => {
     const response = await axios.get(`${ROOT_URL}/movie/${id}`, {
       params: {
         api_key: TMDB_API_KEY,
@@ -89,31 +85,29 @@ function MoviesDetails(props: any) {
     <ScrollView style={styles.container}>
       <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
-        <Card style={styles.moviesDetailsCard}>
-          <View style={styles.moviesDetailsImageiew}>
+        <Card style={styles.movieDetailsCard}>
+          <View style={styles.movieDetailsImageiew}>
             <Image
               source={{ uri: `https://image.tmdb.org/t/p/w500${posterPath}` }}
               style={{ width: 200, height: 200, resizeMode: 'contain' }}
             />
           </View>
-          <Text style={styles.moviesDetailsTitle}>{title}</Text>
-          <Text style={styles.moviesDetailsOverview}>{overview}</Text>
+          <Text style={styles.movieDetailsTitle}>{title}</Text>
+          <Text style={styles.movieDetailsOverview}>{overview}</Text>
 
-          <View style={styles.moviesDetailsDescriptionView}>
-            <Text style={styles.moviesDetailsDescriptionTitle}>Release Date: </Text>
-            <Text style={styles.moviesDetailsDescription}>{releaseDate}</Text>
-          </View>
-          <View style={styles.moviesDetailsDescriptionView}>
-            <Text style={styles.moviesDetailsDescriptionTitle}>Vote Average: </Text>
-            <Text style={styles.moviesDetailsDescription}>{voteAverage}</Text>
-          </View>
-          <View style={styles.moviesDetailsDescriptionView}>
-            <Text style={styles.moviesDetailsDescriptionTitle}>Vote Count: </Text>
-            <Text style={styles.moviesDetailsDescription}>{voteCount}</Text>
-          </View>
-          <View style={styles.moviesDetailsDescriptionView}>
-            <Text style={styles.moviesDetailsDescriptionTitle}>Popularity: </Text>
-            <Text style={styles.moviesDetailsDescription}>{popularity}</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ flexDirection: 'column' }}>
+              <Text style={styles.movieDetailsDescriptionTitle}>Release Date: </Text>
+              <Text style={styles.movieDetailsDescriptionTitle}>Vote Average: </Text>
+              <Text style={styles.movieDetailsDescriptionTitle}>Vote Count: </Text>
+              <Text style={styles.movieDetailsDescriptionTitle}>Popularity: </Text>
+            </View>
+            <View style={{ flexDirection: 'column' }}>
+              <Text style={styles.movieDetailsDescription}>{releaseDate}</Text>
+              <Text style={styles.movieDetailsDescription}>{voteAverage}</Text>
+              <Text style={styles.movieDetailsDescription}>{voteCount}</Text>
+              <Text style={styles.movieDetailsDescription}>{popularity}</Text>
+            </View>
           </View>
         </Card>
       </View>
@@ -121,4 +115,4 @@ function MoviesDetails(props: any) {
   );
 }
 
-export default MoviesDetails;
+export default MovieDetails;
