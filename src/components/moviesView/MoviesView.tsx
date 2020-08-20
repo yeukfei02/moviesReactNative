@@ -10,7 +10,16 @@ const Stack = createStackNavigator();
 function MoviesView() {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#b5c8ea',
+          },
+          headerTitleStyle: {
+            color: 'black',
+          },
+        }}
+      >
         <Stack.Screen name="Movies" component={SearchMovies} />
         <Stack.Screen name="Movies Details" component={MoviesDetails} />
       </Stack.Navigator>

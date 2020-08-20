@@ -9,7 +9,16 @@ const Stack = createStackNavigator();
 function InfoView() {
   return (
     <NavigationContainer independent={true}>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#b5c8ea',
+          },
+          headerTitleStyle: {
+            color: 'black',
+          },
+        }}
+      >
         <Stack.Screen name="Info" component={Info} />
       </Stack.Navigator>
     </NavigationContainer>

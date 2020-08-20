@@ -6,7 +6,7 @@ import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ADD8E6',
+    backgroundColor: '#f0f8ff',
   },
   viewContainer: {
     marginHorizontal: 30,
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
 function Info() {
   return (
     <ScrollView style={styles.container}>
-      <StackViewStatusBar backgroundColor="#3232ff" />
+      <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
         <Text>Info</Text>
       </View>

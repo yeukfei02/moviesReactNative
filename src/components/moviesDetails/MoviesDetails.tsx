@@ -12,7 +12,7 @@ const ROOT_URL = getRootUrl();
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ADD8E6',
+    backgroundColor: '#f0f8ff',
   },
   viewContainer: {
     marginHorizontal: 30,
@@ -87,7 +87,7 @@ function MoviesDetails(props: any) {
 
   return (
     <ScrollView style={styles.container}>
-      <StackViewStatusBar backgroundColor="#3232ff" />
+      <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
         <Card style={styles.moviesDetailsCard}>
           <View style={styles.moviesDetailsImageiew}>

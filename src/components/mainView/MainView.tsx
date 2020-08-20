@@ -37,12 +37,12 @@ function MainView() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: '#3232ff',
+          activeTintColor: '#3c5688',
           inactiveTintColor: 'gray',
         }}
       >
         <Tab.Screen name="Movies" component={MoviesView} />
-        <Tab.Screen name="InfoView" component={InfoView} />
+        <Tab.Screen name="Info" component={InfoView} />
       </Tab.Navigator>
     </NavigationContainer>
   );
