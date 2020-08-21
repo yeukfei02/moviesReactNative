@@ -117,7 +117,9 @@ function MoviesItem(props: any) {
             style={{ width: 80, height: 120, resizeMode: 'stretch' }}
           />
           <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10 }}>
-            <Text style={styles.moviesItemTitle}>{props.item.title}</Text>
+            <Text style={styles.moviesItemTitle}>
+              {props.item.title.length < 25 ? props.item.title : `${props.item.title.substring(0, 25)}...`}
+            </Text>
             <View style={{ flexDirection: 'row', marginVertical: 10 }}>
               {renderRatingStar(props.item.vote_average)}
             </View>
@@ -273,6 +275,7 @@ function SearchMovies(props: any) {
           data={moviesListData}
           renderItem={renderMoviesItem}
           keyExtractor={(item, index) => index.toString()}
+          // onEndReached={() => getMoviesListData(searchText)}
         />
       );
     }
