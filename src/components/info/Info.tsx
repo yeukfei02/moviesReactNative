@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 
 function Info() {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
         <Text>Info</Text>

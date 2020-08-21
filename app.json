@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "moviesReactNative",
+    "name": "Find your movies",
     "slug": "moviesReactNative",
     "platforms": [
       "ios",
@@ -29,7 +29,7 @@
       "package": "com.donaldwu.moviesreactnative",
       "versionCode": 1
     },
-    "description": "moviesReactNative",
+    "description": "Find your movies",
     "privacy": "public",
     "githubUrl": "https://github.com/yeukfei02/moviesReactNative"
   }

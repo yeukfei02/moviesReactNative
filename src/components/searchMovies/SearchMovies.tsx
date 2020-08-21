@@ -91,6 +91,7 @@ function SearchMovies(props: any) {
   const [page, setPage] = useState(1);
 
   const [snackBarStatus, setSnackBarStatus] = useState(false);
+  const [snackBarType, setSnackBarType] = useState('');
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
   useEffect(() => {
@@ -98,6 +99,10 @@ function SearchMovies(props: any) {
       getMoviesListData(searchText);
     } else {
       setMoviesListData([]);
+
+      // setSnackBarStatus(true);
+      // setSnackBarType('error');
+      // setSnackBarMessage('Enter search text more than 3 characters.');
     }
   }, [searchText]);
 
@@ -153,7 +158,7 @@ function SearchMovies(props: any) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
       <View style={styles.viewContainer}>
         <TextInput
@@ -168,8 +173,10 @@ function SearchMovies(props: any) {
 
         {renderMoviesList(moviesListData)}
       </View>
+
       <SnackBar
         snackBarStatus={snackBarStatus}
+        snackBarType={snackBarType}
         handleSnackBarDismiss={() => handleSnackBarDismiss()}
         snackBarMessage={snackBarMessage}
       />
