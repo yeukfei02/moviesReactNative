@@ -84,6 +84,7 @@ function MovieDetails(props: any) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
+
       <View style={styles.viewContainer}>
         <Card style={styles.movieDetailsCard}>
           <View style={styles.movieDetailsImageiew}>
