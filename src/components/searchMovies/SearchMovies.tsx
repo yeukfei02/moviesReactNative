@@ -3,6 +3,7 @@ import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Im
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import _ from 'lodash';
 import { TMDB_API_KEY } from 'react-native-dotenv';
@@ -108,6 +109,10 @@ function SearchMovies(props: any) {
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
   useEffect(() => {
+    getAsyncStorageData();
+  }, []);
+
+  useEffect(() => {
     if (searchText) {
       getMoviesListData(searchText);
     } else {
@@ -118,6 +123,25 @@ function SearchMovies(props: any) {
       // setSnackBarMessage('Enter search text more than 3 characters.');
     }
   }, [searchText]);
+
+  const getAsyncStorageData = async () => {
+    try {
+      const searchTextFromAsyncStorage = await AsyncStorage.getItem('@searchText');
+      if (searchTextFromAsyncStorage) {
+        setSearchText(searchTextFromAsyncStorage);
+      }
+    } catch (e) {
+      console.log('error = ', e.message);
+    }
+  };
+
+  const storeAsyncStorageData = async (key: string, value: any) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      console.log('error = ', e.message);
+    }
+  };
 
   const getMoviesListData = async (searchText: string) => {
     const response = await axios.get(`${ROOT_URL}/movie/popular`, {
@@ -141,6 +165,7 @@ function SearchMovies(props: any) {
   };
 
   const handleSearchTextChange = (searchText: string) => {
+    storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
   };
 
