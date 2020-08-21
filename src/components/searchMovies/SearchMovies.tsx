@@ -3,15 +3,18 @@ import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Im
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import * as Network from 'expo-network';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
 import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
 
 import SnackBar from '../snackBar/SnackBar';
 import Divider from '../divider/Divider';
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
+import CustomDialog from '../customDialog/CustomDialog';
 
 const ROOT_URL = getRootUrl();
 
@@ -53,6 +56,32 @@ const styles = StyleSheet.create({
   },
   dividerStyle: {
     marginVertical: 5,
+  },
+  noDataContainer: {
+    marginVertical: 10,
+    padding: 20,
+    backgroundColor: '#ff9800',
+    borderRadius: 5,
+  },
+  noDataText: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  noNetworkContainer: {
+    marginVertical: 10,
+    padding: 20,
+    backgroundColor: '#f44336',
+    borderRadius: 5,
+  },
+  noNetworkText: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
 });
 
@@ -100,29 +129,42 @@ function MoviesItem(props: any) {
 }
 
 function SearchMovies(props: any) {
+  const [hasNetwork, setHasNetwork] = useState(false);
+
   const [searchText, setSearchText] = useState('');
   const [moviesListData, setMoviesListData] = useState<any[]>([]);
   const [page, setPage] = useState(1);
+
+  const [dialogStatus, setDialogStatus] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState('');
+  const [dialogDescription, setDialogDescription] = useState('');
 
   const [snackBarStatus, setSnackBarStatus] = useState(false);
   const [snackBarType, setSnackBarType] = useState('');
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
   useEffect(() => {
+    checkNetworkStatus();
     getAsyncStorageData();
+    showCustomDialog();
   }, []);
 
   useEffect(() => {
-    if (searchText) {
-      getMoviesListData(searchText);
-    } else {
-      setMoviesListData([]);
-
-      // setSnackBarStatus(true);
-      // setSnackBarType('error');
-      // setSnackBarMessage('Enter search text more than 3 characters.');
+    if (hasNetwork) {
+      if (searchText && searchText.length > 3) {
+        getMoviesListData(searchText);
+      } else {
+        setMoviesListData([]);
+      }
     }
-  }, [searchText]);
+  }, [hasNetwork, searchText]);
+
+  const checkNetworkStatus = async () => {
+    const networkStatus = await Network.getNetworkStateAsync();
+    if (networkStatus.isConnected && networkStatus.isInternetReachable) {
+      setHasNetwork(true);
+    }
+  };
 
   const getAsyncStorageData = async () => {
     try {
@@ -143,6 +185,12 @@ function SearchMovies(props: any) {
     }
   };
 
+  const showCustomDialog = () => {
+    setDialogStatus(true);
+    setDialogTitle('Find your Movies');
+    setDialogDescription('Enter text in input field to find your movies');
+  };
+
   const getMoviesListData = async (searchText: string) => {
     const response = await axios.get(`${ROOT_URL}/movie/popular`, {
       params: {
@@ -155,11 +203,15 @@ function SearchMovies(props: any) {
     console.log('responseData = ', responseData);
 
     if (responseData.results) {
+      const currentYear = moment();
+      const lastYear = moment().subtract(1, 'years');
       const filteredResults = responseData.results.filter((item: any, i: number) => {
-        if (item.title.includes(searchText)) {
+        const releaseYear = moment(item.release_date);
+        if (item.title.includes(searchText) && releaseYear.isBetween(lastYear, currentYear)) {
           return item;
         }
       });
+      console.log('filteredResults = ', filteredResults);
       setMoviesListData(filteredResults);
     }
   };
@@ -171,6 +223,25 @@ function SearchMovies(props: any) {
 
   const renderMoviesItem = (props: any) => {
     return <MoviesItem item={props.item} />;
+  };
+
+  const renderResultDiv = (hasNetwork: boolean) => {
+    let resultDiv = (
+      <View style={styles.noNetworkContainer}>
+        <Text style={styles.noNetworkText}>There are no network</Text>
+      </View>
+    );
+
+    if (hasNetwork) {
+      resultDiv = (
+        <View>
+          {renderSortByRatingsButton(moviesListData)}
+          {renderMoviesList(moviesListData)}
+        </View>
+      );
+    }
+
+    return resultDiv;
   };
 
   const renderSortByRatingsButton = (moviesListData: any[]) => {
@@ -190,7 +261,11 @@ function SearchMovies(props: any) {
   };
 
   const renderMoviesList = (moviesListData: any[]) => {
-    let moviesList = null;
+    let moviesList = (
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>There are no data</Text>
+      </View>
+    );
 
     if (!_.isEmpty(moviesListData)) {
       moviesList = (
@@ -209,6 +284,12 @@ function SearchMovies(props: any) {
     if (!_.isEmpty(moviesListData)) {
       const sortedMoviesListData = _.orderBy(moviesListData, ['vote_average'], ['desc']);
       setMoviesListData(sortedMoviesListData);
+    }
+  };
+
+  const handleHideDialog = () => {
+    if (dialogStatus) {
+      setDialogStatus(false);
     }
   };
 
@@ -233,9 +314,15 @@ function SearchMovies(props: any) {
 
         <Divider style={styles.dividerStyle} />
 
-        {renderSortByRatingsButton(moviesListData)}
-        {renderMoviesList(moviesListData)}
+        {renderResultDiv(hasNetwork)}
       </View>
+
+      <CustomDialog
+        dislogStatus={dialogStatus}
+        dialogTitle={dialogTitle}
+        dialogDescription={dialogDescription}
+        hideDialog={() => handleHideDialog()}
+      />
 
       <SnackBar
         snackBarStatus={snackBarStatus}

@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`main.test render test Info 1`] = `ShallowWrapper {}`;
+
+exports[`main.test render test InfoView 1`] = `ShallowWrapper {}`;
+
+exports[`main.test render test MainView 1`] = `ShallowWrapper {}`;
+
+exports[`main.test render test MoviesView 1`] = `ShallowWrapper {}`;
+
+exports[`main.test render test SearchMovies 1`] = `ShallowWrapper {}`;
