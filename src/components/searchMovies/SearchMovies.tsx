@@ -199,7 +199,7 @@ function SearchMovies(props: any) {
           return item;
         }
       });
-      console.log("filteredResults = ", filteredResults);
+      console.log('filteredResults = ', filteredResults);
       setMoviesListData(filteredResults);
     }
   };
