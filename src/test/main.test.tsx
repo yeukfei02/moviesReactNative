@@ -59,9 +59,10 @@ describe('main.test', () => {
 
   describe('api request test', () => {
     it('search movies request test', async () => {
-      const response = await axios.get(`${ROOT_URL}/movie/popular`, {
+      const response = await axios.get(`${ROOT_URL}/search/movie`, {
         params: {
           api_key: TMDB_API_KEY,
+          query: 'alad',
           language: 'en-US',
           page: 1,
         },
@@ -81,6 +82,9 @@ describe('main.test', () => {
 
           expect(item.title).toBeDefined();
           expect(typeof item.title).toBe('string');
+
+          expect(item.poster_path).toBeDefined();
+          // expect(typeof item.poster_path).toBe('string');
 
           expect(item.vote_average).toBeDefined();
           expect(typeof item.vote_average).toBe('number');
