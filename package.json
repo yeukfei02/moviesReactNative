@@ -24,7 +24,7 @@
     "expo": "~37.0.3",
     "git-cz": "^4.7.0",
     "husky": "^4.2.5",
-    "jest": "^26.4.0",
+    "jest": "^26.4.1",
     "jest-expo": "^38.0.2",
     "lodash": "^4.17.20",
     "metro-react-native-babel-preset": "^0.62.0",
