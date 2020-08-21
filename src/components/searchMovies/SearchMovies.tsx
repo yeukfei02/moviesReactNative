@@ -12,6 +12,7 @@ import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
 
 import SnackBar from '../snackBar/SnackBar';
+import ImageSlider from '../imageSlider/ImageSlider';
 import Divider from '../divider/Divider';
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
 import CustomDialog from '../customDialog/CustomDialog';
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     marginHorizontal: 30,
-    marginVertical: 35,
+    marginVertical: 25,
   },
   searchTextTextInput: {
     borderColor: 'black',
@@ -117,7 +118,9 @@ function MoviesItem(props: any) {
             style={{ width: 80, height: 120, resizeMode: 'stretch' }}
           />
           <View style={{ flexDirection: 'column', justifyContent: 'center', marginHorizontal: 10 }}>
-            <Text style={styles.moviesItemTitle}>{props.item.title}</Text>
+            <Text style={styles.moviesItemTitle}>
+              {props.item.title.length < 25 ? props.item.title : `${props.item.title.substring(0, 25)}...`}
+            </Text>
             <View style={{ flexDirection: 'row', marginVertical: 10 }}>
               {renderRatingStar(props.item.vote_average)}
             </View>
@@ -152,9 +155,10 @@ function SearchMovies(props: any) {
   useEffect(() => {
     if (hasNetwork) {
       if (searchText && searchText.length > 3) {
-        getMoviesListData(searchText);
+        getMoviesListData(searchText, page);
       } else {
         setMoviesListData([]);
+        setPage(1);
       }
     }
   }, [hasNetwork, searchText]);
@@ -191,11 +195,12 @@ function SearchMovies(props: any) {
     setDialogDescription('Enter text in input field to find your movies');
   };
 
-  const getMoviesListData = async (searchText: string) => {
-    const response = await axios.get(`${ROOT_URL}/movie/popular`, {
+  const getMoviesListData = async (searchText: string, page: number) => {
+    const response = await axios.get(`${ROOT_URL}/search/movie`, {
       params: {
         api_key: TMDB_API_KEY,
         language: 'en-US',
+        query: searchText,
         page: page,
       },
     });
@@ -203,15 +208,17 @@ function SearchMovies(props: any) {
     console.log('responseData = ', responseData);
 
     if (responseData.results) {
-      const currentYear = moment();
-      const lastYear = moment().subtract(1, 'years');
+      const currentDate = moment().endOf('year').format('YYYY-MM-DD');
+      const lastYearDate = moment().subtract(1, 'years').startOf('year').format('YYYY-MM-DD');
+
       const filteredResults = responseData.results.filter((item: any, i: number) => {
         const releaseYear = moment(item.release_date);
-        if (item.title.includes(searchText) && releaseYear.isBetween(lastYear, currentYear)) {
+        if (releaseYear.isBetween(lastYearDate, currentDate)) {
           return item;
         }
       });
       console.log('filteredResults = ', filteredResults);
+
       setMoviesListData(filteredResults);
     }
   };
@@ -219,6 +226,8 @@ function SearchMovies(props: any) {
   const handleSearchTextChange = (searchText: string) => {
     storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
+
+    setPage(1);
   };
 
   const renderMoviesItem = (props: any) => {
@@ -273,11 +282,18 @@ function SearchMovies(props: any) {
           data={moviesListData}
           renderItem={renderMoviesItem}
           keyExtractor={(item, index) => index.toString()}
+          onEndReached={() => handleOnEndReached()}
+          onEndReachedThreshold={0.3}
         />
       );
     }
 
     return moviesList;
+  };
+
+  const handleOnEndReached = () => {
+    setPage(page + 1);
+    getMoviesListData(searchText, page);
   };
 
   const handleSortByRatings = () => {
@@ -302,6 +318,8 @@ function SearchMovies(props: any) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
+
+      <ImageSlider />
 
       <View style={styles.viewContainer}>
         <TextInput
