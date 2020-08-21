@@ -7,6 +7,7 @@ import * as Network from 'expo-network';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import _ from 'lodash';
+import moment from 'moment';
 import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
 
@@ -190,11 +191,15 @@ function SearchMovies(props: any) {
     console.log('responseData = ', responseData);
 
     if (responseData.results) {
+      const currentYear = moment();
+      const lastTwoYear = moment().subtract(2, 'years');
       const filteredResults = responseData.results.filter((item: any, i: number) => {
-        if (item.title.includes(searchText)) {
+        const releaseYear = moment(item.release_date);
+        if (item.title.includes(searchText) && releaseYear.isBetween(lastTwoYear, currentYear)) {
           return item;
         }
       });
+      console.log("filteredResults = ", filteredResults);
       setMoviesListData(filteredResults);
     }
   };

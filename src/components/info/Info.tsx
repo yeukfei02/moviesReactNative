@@ -69,7 +69,7 @@ function Info() {
                 <TouchableOpacity onPress={() => handleEmailClick()}>
                   <MaterialIcons name="email" size={50} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={{ marginHorizontal: 15 }} onPress={() => handleGithubClick()}>
+                <TouchableOpacity style={{ marginLeft: 15 }} onPress={() => handleGithubClick()}>
                   <FontAwesome name="github" size={50} color="black" />
                 </TouchableOpacity>
               </View>
