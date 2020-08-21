@@ -54,6 +54,19 @@ const styles = StyleSheet.create({
   dividerStyle: {
     marginVertical: 5,
   },
+  noDataContainer: {
+    marginVertical: 10,
+    padding: 20,
+    backgroundColor: '#ff9800',
+    borderRadius: 5,
+  },
+  noDataText: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
 });
 
 function MoviesItem(props: any) {
@@ -190,7 +203,11 @@ function SearchMovies(props: any) {
   };
 
   const renderMoviesList = (moviesListData: any[]) => {
-    let moviesList = null;
+    let moviesList = (
+      <View style={styles.noDataContainer}>
+        <Text style={styles.noDataText}>There are no data</Text>
+      </View>
+    );
 
     if (!_.isEmpty(moviesListData)) {
       moviesList = (
