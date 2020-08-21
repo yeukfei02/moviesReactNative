@@ -92,6 +92,34 @@ describe('main.test', () => {
       }
     });
 
+    it('movies upcoming request test', async () => {
+      const response = await axios.get(`${ROOT_URL}/movie/upcoming`, {
+        params: {
+          api_key: TMDB_API_KEY,
+          language: 'en-US',
+          page: 1,
+        },
+      });
+      const responseData = response.data;
+      // console.log('responseData = ', responseData);
+
+      expect(responseData).toBeDefined();
+      expect(responseData.results).toBeDefined();
+
+      if (responseData) {
+        responseData.results.forEach((item: any, i: number) => {
+          expect(item.id).toBeDefined();
+          expect(typeof item.id).toBe('number');
+
+          expect(item.title).toBeDefined();
+          expect(typeof item.title).toBe('string');
+
+          expect(item.backdrop_path).toBeDefined();
+          // expect(typeof item.backdrop_path).toBe('string');
+        });
+      }
+    });
+
     it('movies details request test', async () => {
       const response = await axios.get(`${ROOT_URL}/movie/${movieId}`, {
         params: {

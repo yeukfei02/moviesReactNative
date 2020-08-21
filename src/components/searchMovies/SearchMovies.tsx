@@ -12,6 +12,7 @@ import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
 
 import SnackBar from '../snackBar/SnackBar';
+import ImageSlider from '../imageSlider/ImageSlider';
 import Divider from '../divider/Divider';
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
 import CustomDialog from '../customDialog/CustomDialog';
@@ -25,7 +26,7 @@ const styles = StyleSheet.create({
   },
   viewContainer: {
     marginHorizontal: 30,
-    marginVertical: 35,
+    marginVertical: 25,
   },
   searchTextTextInput: {
     borderColor: 'black',
@@ -317,6 +318,8 @@ function SearchMovies(props: any) {
   return (
     <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
+
+      <ImageSlider />
 
       <View style={styles.viewContainer}>
         <TextInput
