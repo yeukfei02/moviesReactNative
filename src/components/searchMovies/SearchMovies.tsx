@@ -192,10 +192,10 @@ function SearchMovies(props: any) {
 
     if (responseData.results) {
       const currentYear = moment();
-      const lastTwoYear = moment().subtract(2, 'years');
+      const lastYear = moment().subtract(1, 'years');
       const filteredResults = responseData.results.filter((item: any, i: number) => {
         const releaseYear = moment(item.release_date);
-        if (item.title.includes(searchText) && releaseYear.isBetween(lastTwoYear, currentYear)) {
+        if (item.title.includes(searchText) && releaseYear.isBetween(lastYear, currentYear)) {
           return item;
         }
       });
