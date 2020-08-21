@@ -4090,6 +4090,11 @@ expo-location@~8.1.0:
   dependencies:
     invariant "^2.2.4"
 
+expo-network@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/expo-network/-/expo-network-2.1.0.tgz#0a4abfd79c068a7e9dae2ca4fbcb91aa2ca57494"
+  integrity sha512-GqjC/Wryk/ebssfBYrZhNrZLsBdiaPWE+HixftqOnF2Kbq6OtaCNrRa72sltGn5teq82YVB0ivOmgotSUr2lSA==
+
 expo-permissions@~8.1.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-8.1.0.tgz#a7f2ee91ba76ce3a467e7b10adaa9ca5201b226f"

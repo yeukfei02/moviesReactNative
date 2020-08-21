@@ -3,6 +3,7 @@ import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Im
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import * as Network from 'expo-network';
 import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import _ from 'lodash';
@@ -67,6 +68,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
+  noNetworkContainer: {
+    marginVertical: 10,
+    padding: 20,
+    backgroundColor: '#f44336',
+    borderRadius: 5,
+  },
+  noNetworkText: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
 });
 
 function MoviesItem(props: any) {
@@ -113,6 +127,8 @@ function MoviesItem(props: any) {
 }
 
 function SearchMovies(props: any) {
+  const [hasNetwork, setHasNetwork] = useState(false);
+
   const [searchText, setSearchText] = useState('');
   const [moviesListData, setMoviesListData] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -122,16 +138,26 @@ function SearchMovies(props: any) {
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
   useEffect(() => {
+    checkNetworkStatus();
     getAsyncStorageData();
   }, []);
 
   useEffect(() => {
-    if (searchText && searchText.length > 3) {
-      getMoviesListData(searchText);
-    } else {
-      setMoviesListData([]);
+    if (hasNetwork) {
+      if (searchText && searchText.length > 3) {
+        getMoviesListData(searchText);
+      } else {
+        setMoviesListData([]);
+      }
     }
-  }, [searchText]);
+  }, [hasNetwork, searchText]);
+
+  const checkNetworkStatus = async () => {
+    const networkStatus = await Network.getNetworkStateAsync();
+    if (networkStatus.isConnected && networkStatus.isInternetReachable) {
+      setHasNetwork(true);
+    }
+  };
 
   const getAsyncStorageData = async () => {
     try {
@@ -180,6 +206,25 @@ function SearchMovies(props: any) {
 
   const renderMoviesItem = (props: any) => {
     return <MoviesItem item={props.item} />;
+  };
+
+  const renderResultDiv = (hasNetwork: boolean) => {
+    let resultDiv = (
+      <View style={styles.noNetworkContainer}>
+        <Text style={styles.noNetworkText}>There are no network</Text>
+      </View>
+    );
+
+    if (hasNetwork) {
+      resultDiv = (
+        <View>
+          {renderSortByRatingsButton(moviesListData)}
+          {renderMoviesList(moviesListData)}
+        </View>
+      );
+    }
+
+    return resultDiv;
   };
 
   const renderSortByRatingsButton = (moviesListData: any[]) => {
@@ -246,8 +291,7 @@ function SearchMovies(props: any) {
 
         <Divider style={styles.dividerStyle} />
 
-        {renderSortByRatingsButton(moviesListData)}
-        {renderMoviesList(moviesListData)}
+        {renderResultDiv(hasNetwork)}
       </View>
 
       <SnackBar
