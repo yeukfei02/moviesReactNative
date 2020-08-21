@@ -14,6 +14,7 @@ import { getRootUrl } from '../../common/Common';
 import SnackBar from '../snackBar/SnackBar';
 import Divider from '../divider/Divider';
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
+import CustomDialog from '../customDialog/CustomDialog';
 
 const ROOT_URL = getRootUrl();
 
@@ -134,6 +135,10 @@ function SearchMovies(props: any) {
   const [moviesListData, setMoviesListData] = useState<any[]>([]);
   const [page, setPage] = useState(1);
 
+  const [dialogStatus, setDialogStatus] = useState(false);
+  const [dialogTitle, setDialogTitle] = useState('');
+  const [dialogDescription, setDialogDescription] = useState('');
+
   const [snackBarStatus, setSnackBarStatus] = useState(false);
   const [snackBarType, setSnackBarType] = useState('');
   const [snackBarMessage, setSnackBarMessage] = useState('');
@@ -141,6 +146,7 @@ function SearchMovies(props: any) {
   useEffect(() => {
     checkNetworkStatus();
     getAsyncStorageData();
+    showCustomDialog();
   }, []);
 
   useEffect(() => {
@@ -177,6 +183,12 @@ function SearchMovies(props: any) {
     } catch (e) {
       console.log('error = ', e.message);
     }
+  };
+
+  const showCustomDialog = () => {
+    setDialogStatus(true);
+    setDialogTitle('Find your Movies');
+    setDialogDescription('Enter text in input field to find your movies');
   };
 
   const getMoviesListData = async (searchText: string) => {
@@ -275,6 +287,12 @@ function SearchMovies(props: any) {
     }
   };
 
+  const handleHideDialog = () => {
+    if (dialogStatus) {
+      setDialogStatus(false);
+    }
+  };
+
   const handleSnackBarDismiss = () => {
     if (snackBarStatus) {
       setSnackBarStatus(false);
@@ -298,6 +316,13 @@ function SearchMovies(props: any) {
 
         {renderResultDiv(hasNetwork)}
       </View>
+
+      <CustomDialog
+        dislogStatus={dialogStatus}
+        dialogTitle={dialogTitle}
+        dialogDescription={dialogDescription}
+        hideDialog={() => handleHideDialog()}
+      />
 
       <SnackBar
         snackBarStatus={snackBarStatus}
