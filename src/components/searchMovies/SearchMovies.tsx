@@ -126,14 +126,10 @@ function SearchMovies(props: any) {
   }, []);
 
   useEffect(() => {
-    if (searchText) {
+    if (searchText && searchText.length > 3) {
       getMoviesListData(searchText);
     } else {
       setMoviesListData([]);
-
-      // setSnackBarStatus(true);
-      // setSnackBarType('error');
-      // setSnackBarMessage('Enter search text more than 3 characters.');
     }
   }, [searchText]);
 
