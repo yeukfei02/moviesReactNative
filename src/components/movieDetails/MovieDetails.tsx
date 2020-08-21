@@ -82,8 +82,9 @@ function MovieDetails(props: any) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
+
       <View style={styles.viewContainer}>
         <Card style={styles.movieDetailsCard}>
           <View style={styles.movieDetailsImageiew}>
@@ -102,7 +103,7 @@ function MovieDetails(props: any) {
               <Text style={styles.movieDetailsDescriptionTitle}>Vote Count: </Text>
               <Text style={styles.movieDetailsDescriptionTitle}>Popularity: </Text>
             </View>
-            <View style={{ flexDirection: 'column', marginLeft: 5 }}>
+            <View style={{ flexDirection: 'column', marginHorizontal: 10 }}>
               <Text style={styles.movieDetailsDescription}>{releaseDate}</Text>
               <Text style={styles.movieDetailsDescription}>{voteAverage}</Text>
               <Text style={styles.movieDetailsDescription}>{voteCount}</Text>

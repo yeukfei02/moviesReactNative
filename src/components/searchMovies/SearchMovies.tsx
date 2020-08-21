@@ -3,7 +3,9 @@ import { StyleSheet, View, TextInput, ScrollView, FlatList, TouchableOpacity, Im
 import { Card } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { FontAwesome } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
+import _ from 'lodash';
 import { TMDB_API_KEY } from 'react-native-dotenv';
 import { getRootUrl } from '../../common/Common';
 
@@ -28,13 +30,25 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 15,
   },
+  sortByRatingsButtonContainer: {
+    marginVertical: 10,
+    padding: 20,
+    backgroundColor: '#b5c8ea',
+    borderRadius: 5,
+  },
+  sortByRatingsButtonText: {
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
   moviesItemCard: {
-    paddingHorizontal: 30,
+    paddingHorizontal: 25,
     paddingVertical: 20,
-    marginVertical: 15,
+    marginVertical: 10,
   },
   moviesItemTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: 'bold',
   },
   dividerStyle: {
@@ -91,15 +105,43 @@ function SearchMovies(props: any) {
   const [page, setPage] = useState(1);
 
   const [snackBarStatus, setSnackBarStatus] = useState(false);
+  const [snackBarType, setSnackBarType] = useState('');
   const [snackBarMessage, setSnackBarMessage] = useState('');
+
+  useEffect(() => {
+    getAsyncStorageData();
+  }, []);
 
   useEffect(() => {
     if (searchText) {
       getMoviesListData(searchText);
     } else {
       setMoviesListData([]);
+
+      // setSnackBarStatus(true);
+      // setSnackBarType('error');
+      // setSnackBarMessage('Enter search text more than 3 characters.');
     }
   }, [searchText]);
+
+  const getAsyncStorageData = async () => {
+    try {
+      const searchTextFromAsyncStorage = await AsyncStorage.getItem('@searchText');
+      if (searchTextFromAsyncStorage) {
+        setSearchText(searchTextFromAsyncStorage);
+      }
+    } catch (e) {
+      console.log('error = ', e.message);
+    }
+  };
+
+  const storeAsyncStorageData = async (key: string, value: any) => {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      console.log('error = ', e.message);
+    }
+  };
 
   const getMoviesListData = async (searchText: string) => {
     const response = await axios.get(`${ROOT_URL}/movie/popular`, {
@@ -123,6 +165,7 @@ function SearchMovies(props: any) {
   };
 
   const handleSearchTextChange = (searchText: string) => {
+    storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
   };
 
@@ -130,10 +173,26 @@ function SearchMovies(props: any) {
     return <MoviesItem item={props.item} />;
   };
 
+  const renderSortByRatingsButton = (moviesListData: any[]) => {
+    let sortByRatingsButton = null;
+
+    if (!_.isEmpty(moviesListData)) {
+      sortByRatingsButton = (
+        <TouchableOpacity onPress={() => handleSortByRatings()}>
+          <View style={styles.sortByRatingsButtonContainer}>
+            <Text style={styles.sortByRatingsButtonText}>Sort by ratings</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
+    return sortByRatingsButton;
+  };
+
   const renderMoviesList = (moviesListData: any[]) => {
     let moviesList = null;
 
-    if (moviesListData) {
+    if (!_.isEmpty(moviesListData)) {
       moviesList = (
         <FlatList
           data={moviesListData}
@@ -146,6 +205,13 @@ function SearchMovies(props: any) {
     return moviesList;
   };
 
+  const handleSortByRatings = () => {
+    if (!_.isEmpty(moviesListData)) {
+      const sortedMoviesListData = _.orderBy(moviesListData, ['vote_average'], ['desc']);
+      setMoviesListData(sortedMoviesListData);
+    }
+  };
+
   const handleSnackBarDismiss = () => {
     if (snackBarStatus) {
       setSnackBarStatus(false);
@@ -153,8 +219,9 @@ function SearchMovies(props: any) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={{ flexGrow: 1 }}>
       <StackViewStatusBar backgroundColor="#3c5688" />
+
       <View style={styles.viewContainer}>
         <TextInput
           style={styles.searchTextTextInput}
@@ -166,10 +233,13 @@ function SearchMovies(props: any) {
 
         <Divider style={styles.dividerStyle} />
 
+        {renderSortByRatingsButton(moviesListData)}
         {renderMoviesList(moviesListData)}
       </View>
+
       <SnackBar
         snackBarStatus={snackBarStatus}
+        snackBarType={snackBarType}
         handleSnackBarDismiss={() => handleSnackBarDismiss()}
         snackBarMessage={snackBarMessage}
       />
