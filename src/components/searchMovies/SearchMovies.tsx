@@ -225,7 +225,7 @@ function SearchMovies(props: any) {
   const handleSearchTextChange = (searchText: string) => {
     storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
-    
+
     setPage(1);
   };
 
@@ -293,7 +293,7 @@ function SearchMovies(props: any) {
   const handleOnEndReached = () => {
     setPage(page + 1);
     getMoviesListData(searchText, page);
-  }
+  };
 
   const handleSortByRatings = () => {
     if (!_.isEmpty(moviesListData)) {
