@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Find your movies",
-    "slug": "moviesReactNative",
+    "slug": "findYourMovies",
     "platforms": [
       "ios",
       "android"
@@ -17,11 +17,11 @@
     ],
     "sdkVersion": "37.0.0",
     "ios": {
-      "bundleIdentifier": "com.donaldwu.moviesreactnative",
+      "bundleIdentifier": "com.donaldwu.findyourmovies",
       "buildNumber": "1.0.0"
     },
     "android": {
-      "package": "com.donaldwu.moviesreactnative",
+      "package": "com.donaldwu.findyourmovies",
       "versionCode": 1
     },
     "description": "Find your movies",
