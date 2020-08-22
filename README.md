@@ -3,6 +3,11 @@
   <h2 align="center">moviesReactNative</h2>
 </p>
 
+<p align="center">
+  <a href="https://travis-ci.com/yeukfei02/moviesReactNative"><img src="https://travis-ci.com/yeukfei02/moviesReactNative.svg?branch=master" alt=""></a>
+  <a href="https://codecov.io/gh/yeukfei02/moviesReactNative"><img src="https://codecov.io/gh/yeukfei02/moviesReactNative/branch/master/graph/badge.svg" alt=""></a>
+</p>
+
 Find your movies
 
 <p align="center">
