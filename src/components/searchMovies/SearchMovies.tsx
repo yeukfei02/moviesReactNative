@@ -19,6 +19,8 @@ import CustomDialog from '../customDialog/CustomDialog';
 
 const ROOT_URL = getRootUrl();
 
+let allMoviesListData: any[] = [];
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -135,6 +137,8 @@ function SearchMovies(props: any) {
   const [hasNetwork, setHasNetwork] = useState(false);
 
   const [searchText, setSearchText] = useState('');
+  const [totalPages, setTotalPages] = useState(0);
+
   const [moviesListData, setMoviesListData] = useState<any[]>([]);
   const [page, setPage] = useState(1);
 
@@ -146,6 +150,9 @@ function SearchMovies(props: any) {
   const [snackBarType, setSnackBarType] = useState('');
   const [snackBarMessage, setSnackBarMessage] = useState('');
 
+  console.log('page = ', page);
+  console.log('totalPages = ', totalPages);
+
   useEffect(() => {
     checkNetworkStatus();
     getAsyncStorageData();
@@ -156,12 +163,35 @@ function SearchMovies(props: any) {
     if (hasNetwork) {
       if (searchText && searchText.length > 3) {
         getMoviesListData(searchText, page);
-      } else {
-        setMoviesListData([]);
-        setPage(1);
       }
     }
   }, [hasNetwork, searchText]);
+
+  useEffect(() => {
+    if (page < totalPages) {
+      const newPage = page + 1;
+      setPage(newPage);
+
+      for (let i = page; i < totalPages; i++) {
+        getMoviesListData(searchText, page);
+      }
+    } else if (page === totalPages) {
+      if (allMoviesListData) {
+        const currentDate = moment().endOf('year').format('YYYY-MM-DD');
+        const lastYearDate = moment().subtract(1, 'years').startOf('year').format('YYYY-MM-DD');
+
+        const filteredResults = allMoviesListData.filter((item: any, i: number) => {
+          const releaseDate = moment(item.release_date);
+          if (releaseDate.isBetween(lastYearDate, currentDate)) {
+            return item;
+          }
+        });
+        // console.log('filteredResults = ', filteredResults);
+
+        setMoviesListData(filteredResults);
+      }
+    }
+  }, [page, totalPages]);
 
   const checkNetworkStatus = async () => {
     const networkStatus = await Network.getNetworkStateAsync();
@@ -205,41 +235,41 @@ function SearchMovies(props: any) {
       },
     });
     const responseData = response.data;
-    console.log('responseData = ', responseData);
+    // console.log('responseData = ', responseData);
 
-    if (responseData.results) {
-      const currentDate = moment().endOf('year').format('YYYY-MM-DD');
-      const lastYearDate = moment().subtract(1, 'years').startOf('year').format('YYYY-MM-DD');
+    if (responseData) {
+      allMoviesListData = _.union(allMoviesListData, responseData.results);
 
-      const filteredResults = responseData.results.filter((item: any, i: number) => {
-        const releaseDate = moment(item.release_date);
-        if (releaseDate.isBetween(lastYearDate, currentDate)) {
-          return item;
+      if (page === 1) {
+        if (responseData.total_pages < 50) {
+          setTotalPages(responseData.total_pages);
         }
-      });
-      console.log('filteredResults = ', filteredResults);
-
-      setMoviesListData(filteredResults);
+      }
     }
   };
 
   const handleSearchTextChange = (searchText: string) => {
     storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
+
+    allMoviesListData = [];
+    setTotalPages(0);
+    setMoviesListData([]);
+    setPage(1);
   };
 
   const renderMoviesItem = (props: any) => {
     return <MoviesItem item={props.item} />;
   };
 
-  const renderResultDiv = (hasNetwork: boolean) => {
+  const renderResultDiv = (hasNetwork: boolean, moviesListData: any[]) => {
     let resultDiv = (
       <View style={styles.noNetworkContainer}>
         <Text style={styles.noNetworkText}>There are no network</Text>
       </View>
     );
 
-    if (hasNetwork) {
+    if (hasNetwork && moviesListData) {
       resultDiv = (
         <View>
           {renderSortByRatingsButton(moviesListData)}
@@ -280,18 +310,11 @@ function SearchMovies(props: any) {
           data={moviesListData}
           renderItem={renderMoviesItem}
           keyExtractor={(item, index) => index.toString()}
-          onEndReached={() => handleOnEndReached()}
-          onEndReachedThreshold={0.3}
         />
       );
     }
 
     return moviesList;
-  };
-
-  const handleOnEndReached = () => {
-    setPage(page + 1);
-    getMoviesListData(searchText, page);
   };
 
   const handleSortByRatings = () => {
@@ -330,7 +353,7 @@ function SearchMovies(props: any) {
 
         <Divider style={styles.dividerStyle} />
 
-        {renderResultDiv(hasNetwork)}
+        {renderResultDiv(hasNetwork, moviesListData)}
       </View>
 
       <CustomDialog
