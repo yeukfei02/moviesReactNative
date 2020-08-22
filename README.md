@@ -1,6 +1,14 @@
-# moviesReactNative
+<p align="center">
+  <img width="200px" src="https://github.com/yeukfei02/moviesReactNative/blob/master/readme-icon.png"><br/>
+  <h2 align="center">moviesReactNative</h2>
+</p>
 
-movies app in react native
+Find your movies
+
+<p align="center">
+  <a href="https://apps.apple.com/us/app/findyourmovies/id1509385881"><img src="https://github.com/yeukfei02/moviesReactNative/blob/master/app-store-badge.png" width="30%" height="30%" alt=""></a>
+  <a href="https://play.google.com/store/apps/details?id=com.donaldwu.findyourmovies"><img src="https://github.com/yeukfei02/moviesReactNative/blob/master/google-play-badge.png" width="30%" height="30%" alt=""></a>
+</p>
 
 ## Requirement:
  - install expo-cli

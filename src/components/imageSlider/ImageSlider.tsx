@@ -14,7 +14,7 @@ function ImageSlider() {
   }, []);
 
   const getImagesList = async () => {
-    const response = await axios.get(`${ROOT_URL}/movie/upcoming`, {
+    const response = await axios.get(`${ROOT_URL}/movie/popular`, {
       params: {
         api_key: TMDB_API_KEY,
         language: 'en-US',
@@ -29,7 +29,7 @@ function ImageSlider() {
         return `https://image.tmdb.org/t/p/w500${item.backdrop_path}`;
       });
       const filteredImagesList = imagesList.filter((item: any, i: number) => {
-        return i < 8;
+        return i < 5;
       });
       setImagesList(filteredImagesList);
     }

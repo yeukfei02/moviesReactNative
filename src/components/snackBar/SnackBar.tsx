@@ -13,7 +13,7 @@ function SnackBar(props: any) {
         color = '#2196f3';
         break;
       case 'warning':
-        color = '#ff9800';
+        color = '#f9ec14';
         break;
       case 'error':
         color = '#f44336';

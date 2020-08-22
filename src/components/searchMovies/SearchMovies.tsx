@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   noDataContainer: {
     marginVertical: 10,
     padding: 20,
-    backgroundColor: '#ff9800',
+    backgroundColor: '#f9ec14',
     borderRadius: 5,
   },
   noDataText: {
@@ -212,8 +212,8 @@ function SearchMovies(props: any) {
       const lastYearDate = moment().subtract(1, 'years').startOf('year').format('YYYY-MM-DD');
 
       const filteredResults = responseData.results.filter((item: any, i: number) => {
-        const releaseYear = moment(item.release_date);
-        if (releaseYear.isBetween(lastYearDate, currentDate)) {
+        const releaseDate = moment(item.release_date);
+        if (releaseDate.isBetween(lastYearDate, currentDate)) {
           return item;
         }
       });
@@ -226,8 +226,6 @@ function SearchMovies(props: any) {
   const handleSearchTextChange = (searchText: string) => {
     storeAsyncStorageData('@searchText', searchText);
     setSearchText(searchText);
-
-    setPage(1);
   };
 
   const renderMoviesItem = (props: any) => {
