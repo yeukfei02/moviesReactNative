@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   noDataContainer: {
     marginVertical: 10,
     padding: 20,
-    backgroundColor: '#ff9800',
+    backgroundColor: '#f9ec14',
     borderRadius: 5,
   },
   noDataText: {
