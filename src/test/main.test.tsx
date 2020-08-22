@@ -92,8 +92,8 @@ describe('main.test', () => {
       }
     });
 
-    it('movies upcoming request test', async () => {
-      const response = await axios.get(`${ROOT_URL}/movie/upcoming`, {
+    it('movies popular request test', async () => {
+      const response = await axios.get(`${ROOT_URL}/movie/popular`, {
         params: {
           api_key: TMDB_API_KEY,
           language: 'en-US',
