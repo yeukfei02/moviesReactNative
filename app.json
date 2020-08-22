@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/appstore-icon.png",
     "updates": {
@@ -15,14 +15,13 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "sdkVersion": "37.0.0",
     "ios": {
       "bundleIdentifier": "com.donaldwu.findyourmovies",
-      "buildNumber": "1.0.0"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "package": "com.donaldwu.findyourmovies",
-      "versionCode": 1
+      "versionCode": 3
     },
     "description": "Find your movies",
     "privacy": "public",
