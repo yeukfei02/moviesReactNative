@@ -47,6 +47,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    letterSpacing: 1.2,
+  },
+  clearButtonContainer: {
+    marginVertical: 8,
+    padding: 20,
+    backgroundColor: '#f44336',
+    borderRadius: 5,
+  },
+  clearButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1.2,
   },
   moviesItemCard: {
     paddingHorizontal: 25,
@@ -72,6 +86,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    letterSpacing: 1.2,
   },
   noNetworkContainer: {
     marginVertical: 10,
@@ -85,6 +100,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    letterSpacing: 1.2,
   },
 });
 
@@ -274,6 +290,7 @@ function SearchMovies(props: any) {
       resultDiv = (
         <View>
           {renderSortByRatingsButton(moviesListData)}
+          {renderClearButton(moviesListData)}
           {renderMoviesList(moviesListData)}
         </View>
       );
@@ -296,6 +313,22 @@ function SearchMovies(props: any) {
     }
 
     return sortByRatingsButton;
+  };
+
+  const renderClearButton = (moviesListData: any[]) => {
+    let clearButton = null;
+
+    if (!_.isEmpty(moviesListData)) {
+      clearButton = (
+        <TouchableOpacity onPress={() => handleClear()}>
+          <View style={styles.clearButtonContainer}>
+            <Text style={styles.clearButtonText}>Clear</Text>
+          </View>
+        </TouchableOpacity>
+      );
+    }
+
+    return clearButton;
   };
 
   const renderMoviesList = (moviesListData: any[]) => {
@@ -323,6 +356,15 @@ function SearchMovies(props: any) {
       const sortedMoviesListData = _.orderBy(moviesListData, ['vote_average'], ['desc']);
       setMoviesListData(sortedMoviesListData);
     }
+  };
+
+  const handleClear = () => {
+    setSearchText('');
+
+    allMoviesListData = [];
+    setTotalPages(0);
+    setMoviesListData([]);
+    setPage(1);
   };
 
   const handleHideDialog = () => {
