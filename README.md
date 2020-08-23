@@ -6,6 +6,7 @@
 <p align="center">
   <a href="https://travis-ci.com/yeukfei02/moviesReactNative"><img src="https://travis-ci.com/yeukfei02/moviesReactNative.svg?branch=master" alt=""></a>
   <a href="https://codecov.io/gh/yeukfei02/moviesReactNative"><img src="https://codecov.io/gh/yeukfei02/moviesReactNative/branch/master/graph/badge.svg" alt=""></a>
+  <img src="https://github.com/yeukfei02/moviesReactNative/blob/master/readme-gif.gif" alt="">
 </p>
 
 Find your movies
