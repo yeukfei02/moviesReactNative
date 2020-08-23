@@ -238,7 +238,8 @@ function SearchMovies(props: any) {
     // console.log('responseData = ', responseData);
 
     if (responseData) {
-      allMoviesListData = _.union(allMoviesListData, responseData.results);
+      allMoviesListData = allMoviesListData.concat(responseData.results);
+      allMoviesListData = _.uniqBy(allMoviesListData, 'title');
 
       if (page === 1) {
         if (responseData.total_pages < 50) {
