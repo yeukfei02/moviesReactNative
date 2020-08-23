@@ -14,6 +14,9 @@ import SearchMovies from '../components/searchMovies/SearchMovies';
 
 import Info from '../components/info/Info';
 
+import StackViewStatusBar from '../components/stackViewStatusBar/StackViewStatusBar';
+import ImageSlider from '../components/imageSlider/ImageSlider';
+
 Enzyme.configure({ adapter: new Adapter() });
 
 jest.mock('@react-native-community/async-storage', () => mockAsyncStorage);
@@ -48,6 +51,24 @@ describe('main.test', () => {
     it('Info', () => {
       const wrapper = shallow(<Info />);
       expect(wrapper).toMatchSnapshot();
+    });
+  });
+
+  describe('ui test', () => {
+    it('SearchMovies', () => {
+      const wrapper = shallow(<SearchMovies />);
+      expect(wrapper.contains(<StackViewStatusBar backgroundColor="#3c5688" />)).toEqual(true);
+      expect(wrapper.contains(<ImageSlider />)).toEqual(true);
+    });
+
+    // it('MovieDetails', () => {
+    //   const wrapper = shallow(<MovieDetails />);
+    //   expect(wrapper.contains(<StackViewStatusBar backgroundColor="#3c5688" />)).toEqual(true);
+    // });
+
+    it('Info', () => {
+      const wrapper = shallow(<Info />);
+      expect(wrapper.contains(<StackViewStatusBar backgroundColor="#3c5688" />)).toEqual(true);
     });
   });
 });
