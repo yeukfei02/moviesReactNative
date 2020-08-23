@@ -19,7 +19,24 @@ import CustomDialog from '../customDialog/CustomDialog';
 
 const ROOT_URL = getRootUrl();
 
-let allMoviesListData: any[] = [];
+interface MoviesListData {
+  popularity: number;
+  vote_count: number;
+  video: boolean;
+  poster_path: string;
+  id: number;
+  adult: boolean;
+  backdrop_path: string;
+  original_language: string;
+  original_title: string;
+  genre_ids: number[];
+  title: string;
+  vote_average: number;
+  overview: string;
+  release_date: string;
+}
+
+let allMoviesListData: MoviesListData[] = [];
 
 const styles = StyleSheet.create({
   container: {
@@ -149,13 +166,13 @@ function MoviesItem(props: any) {
   );
 }
 
-function SearchMovies(props: any) {
+function SearchMovies(): JSX.Element {
   const [hasNetwork, setHasNetwork] = useState(false);
 
   const [searchText, setSearchText] = useState('');
   const [totalPages, setTotalPages] = useState(0);
 
-  const [moviesListData, setMoviesListData] = useState<any[]>([]);
+  const [moviesListData, setMoviesListData] = useState<MoviesListData[]>([]);
   const [page, setPage] = useState(1);
 
   const [dialogStatus, setDialogStatus] = useState(false);
@@ -196,7 +213,7 @@ function SearchMovies(props: any) {
         const currentDate = moment().endOf('year').format('YYYY-MM-DD');
         const lastYearDate = moment().subtract(1, 'years').startOf('year').format('YYYY-MM-DD');
 
-        const filteredResults = allMoviesListData.filter((item: any, i: number) => {
+        const filteredResults = allMoviesListData.filter((item: MoviesListData, i: number) => {
           const releaseDate = moment(item.release_date);
           if (releaseDate.isBetween(lastYearDate, currentDate)) {
             return item;
@@ -279,7 +296,7 @@ function SearchMovies(props: any) {
     return <MoviesItem item={props.item} />;
   };
 
-  const renderResultDiv = (hasNetwork: boolean, moviesListData: any[]) => {
+  const renderResultDiv = (hasNetwork: boolean, moviesListData: MoviesListData[]) => {
     let resultDiv = (
       <View style={styles.noNetworkContainer}>
         <Text style={styles.noNetworkText}>There are no network</Text>
@@ -299,7 +316,7 @@ function SearchMovies(props: any) {
     return resultDiv;
   };
 
-  const renderSortByRatingsButton = (moviesListData: any[]) => {
+  const renderSortByRatingsButton = (moviesListData: MoviesListData[]) => {
     let sortByRatingsButton = null;
 
     if (!_.isEmpty(moviesListData)) {
@@ -315,7 +332,7 @@ function SearchMovies(props: any) {
     return sortByRatingsButton;
   };
 
-  const renderClearButton = (moviesListData: any[]) => {
+  const renderClearButton = (moviesListData: MoviesListData[]) => {
     let clearButton = null;
 
     if (!_.isEmpty(moviesListData)) {
@@ -331,7 +348,7 @@ function SearchMovies(props: any) {
     return clearButton;
   };
 
-  const renderMoviesList = (moviesListData: any[]) => {
+  const renderMoviesList = (moviesListData: MoviesListData[]) => {
     let moviesList = (
       <View style={styles.noDataContainer}>
         <Text style={styles.noDataText}>There are no data</Text>
