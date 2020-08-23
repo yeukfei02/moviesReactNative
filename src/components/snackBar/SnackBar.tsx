@@ -1,7 +1,7 @@
 import React from 'react';
 import { Snackbar } from 'react-native-paper';
 
-function SnackBar(props: any) {
+function SnackBar(props: any): JSX.Element {
   let color = '';
 
   if (props.snackBarType) {

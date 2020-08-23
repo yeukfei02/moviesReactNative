@@ -7,7 +7,7 @@ import MovieDetails from '../movieDetails/MovieDetails';
 
 const Stack = createStackNavigator();
 
-function MoviesView() {
+function MoviesView(): JSX.Element {
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator

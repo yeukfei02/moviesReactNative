@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function MovieDetails(props: any) {
+function MovieDetails(props: any): JSX.Element {
   const [posterPath, setPosterPath] = useState('');
   const [title, setTitle] = useState('');
   const [overview, setOverview] = useState('');

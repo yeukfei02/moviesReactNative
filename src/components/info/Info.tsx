@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, ScrollView, View, Image, TouchableOpacity, Linking } from 'react-native';
 import { MaterialIcons, FontAwesome } from '@expo/vector-icons';
 
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function Info() {
+function Info(): JSX.Element {
   const handleTmdbLinkClick = () => {
     Linking.openURL(`https://developers.themoviedb.org/3/getting-started/introduction`);
   };

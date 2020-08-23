@@ -6,7 +6,7 @@ import Info from '../info/Info';
 
 const Stack = createStackNavigator();
 
-function InfoView() {
+function InfoView(): JSX.Element {
   return (
     <NavigationContainer independent={true}>
       <Stack.Navigator
