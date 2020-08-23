@@ -6,10 +6,13 @@
 <p align="center">
   <a href="https://travis-ci.com/yeukfei02/moviesReactNative"><img src="https://travis-ci.com/yeukfei02/moviesReactNative.svg?branch=master" alt=""></a>
   <a href="https://codecov.io/gh/yeukfei02/moviesReactNative"><img src="https://codecov.io/gh/yeukfei02/moviesReactNative/branch/master/graph/badge.svg" alt=""></a>
-  <img src="https://github.com/yeukfei02/moviesReactNative/blob/master/readme-gif.gif" alt="">
 </p>
 
 Find your movies
+
+<p align="center">
+  <img width="30%" height="30%" src="https://github.com/yeukfei02/moviesReactNative/blob/master/readme-gif.gif" alt="">
+</p>
 
 <p align="center">
   <a href="https://apps.apple.com/us/app/findyourmovies/id1509385881"><img src="https://github.com/yeukfei02/moviesReactNative/blob/master/app-store-badge.png" width="30%" height="30%" alt=""></a>
