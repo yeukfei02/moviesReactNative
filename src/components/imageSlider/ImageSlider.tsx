@@ -6,7 +6,7 @@ import { getRootUrl } from '../../common/Common';
 
 const ROOT_URL = getRootUrl();
 
-function ImageSlider() {
+function ImageSlider(): JSX.Element {
   const [imagesList, setImagesList] = useState<string[]>([]);
 
   useEffect(() => {

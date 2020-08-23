@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Paragraph, Dialog } from 'react-native-paper';
 
-function CustomDialog(props: any) {
+function CustomDialog(props: any): JSX.Element {
   return (
     <Dialog visible={props.dislogStatus} onDismiss={props.hideDialog}>
       <Dialog.Title>{props.dialogTitle}</Dialog.Title>

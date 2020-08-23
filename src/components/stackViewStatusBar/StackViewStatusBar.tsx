@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar, Platform } from 'react-native';
 
-function StackViewStatusBar(props: any) {
+function StackViewStatusBar(props: any): JSX.Element {
   return (
     <StatusBar
       backgroundColor={props.backgroundColor}

@@ -8,7 +8,7 @@ import InfoView from '../infoView/InfoView';
 
 const Tab = createBottomTabNavigator();
 
-function MainView() {
+function MainView(): JSX.Element {
   return (
     <NavigationContainer independent={true}>
       <Tab.Navigator
