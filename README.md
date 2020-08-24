@@ -12,10 +12,10 @@
   <img width="30%" height="30%" src="https://github.com/yeukfei02/moviesReactNative/blob/master/readme-gif.gif" alt="">
 </p>
 
-<p align="center">
+<!-- <p align="center">
   <a href="https://apps.apple.com/us/app/findyourmovies/id1509385881"><img src="https://github.com/yeukfei02/moviesReactNative/blob/master/app-store-badge.png" width="30%" height="30%" alt=""></a>
   <a href="https://play.google.com/store/apps/details?id=com.donaldwu.findyourmovies"><img src="https://github.com/yeukfei02/moviesReactNative/blob/master/google-play-badge.png" width="30%" height="30%" alt=""></a>
-</p>
+</p> -->
 
 ## Requirement:
  - install expo-cli
