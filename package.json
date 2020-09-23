@@ -1,5 +1,7 @@
 {
+  "version": "1.0.5",
   "main": "node_modules/expo/AppEntry.js",
+  "private": true,
   "dependencies": {
     "@expo/vector-icons": "^10.0.0",
     "@react-native-community/async-storage": "~1.11.0",
@@ -43,7 +45,8 @@
     "react-native-reanimated": "~1.9.0",
     "react-native-safe-area-context": "~3.0.7",
     "react-native-screens": "~2.9.0",
-    "react-native-web": "~0.11.7"
+    "react-native-web": "~0.11.7",
+    "standard-version": "^9.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -60,13 +63,13 @@
     "eject": "expo eject",
     "test": "jest",
     "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
-    "commit": "npx git-cz"
+    "commit": "npx git-cz",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint",
       "pre-push": "yarn lint"
     }
-  },
-  "private": true
+  }
 }
