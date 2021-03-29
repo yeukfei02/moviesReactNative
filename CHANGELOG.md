@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/yeukfei02/moviesReactNative/compare/v1.1.0...v1.1.1) (2021-03-29)
+
+
+### Bug Fixes
+
+* 🐛 fix package.json ([d182f64](https://github.com/yeukfei02/moviesReactNative/commit/d182f64866953d593a4178b26766ffd4f540e5d3))
+
 ## [1.1.0](https://github.com/yeukfei02/moviesReactNative/compare/v1.0.5...v1.1.0) (2020-09-23)
 
 
