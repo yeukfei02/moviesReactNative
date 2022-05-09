@@ -9,7 +9,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import moment from 'moment';
 import { TMDB_API_KEY } from 'react-native-dotenv';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helper/helper';
 
 import SnackBar from '../snackBar/SnackBar';
 import ImageSlider from '../imageSlider/ImageSlider';
@@ -17,7 +17,7 @@ import Divider from '../divider/Divider';
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
 import CustomDialog from '../customDialog/CustomDialog';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 interface MoviesListData {
   popularity: number;
@@ -259,7 +259,7 @@ function SearchMovies(): JSX.Element {
   };
 
   const getMoviesListData = async (searchText: string, page: number) => {
-    const response = await axios.get(`${ROOT_URL}/search/movie`, {
+    const response = await axios.get(`${rootUrl}/search/movie`, {
       params: {
         api_key: TMDB_API_KEY,
         language: 'en-US',

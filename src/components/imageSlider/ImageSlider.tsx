@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { SliderBox } from 'react-native-image-slider-box';
 import axios from 'axios';
 import { TMDB_API_KEY } from 'react-native-dotenv';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helper/helper';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 function ImageSlider(): JSX.Element {
   const [imagesList, setImagesList] = useState<string[]>([]);
@@ -14,7 +14,7 @@ function ImageSlider(): JSX.Element {
   }, []);
 
   const getImagesList = async () => {
-    const response = await axios.get(`${ROOT_URL}/movie/popular`, {
+    const response = await axios.get(`${rootUrl}/movie/popular`, {
       params: {
         api_key: TMDB_API_KEY,
         language: 'en-US',
