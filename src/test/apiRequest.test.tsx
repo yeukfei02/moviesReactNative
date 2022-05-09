@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { TMDB_API_KEY } from 'react-native-dotenv';
-import { getRootUrl } from '../common/Common';
+import { getRootUrl } from '../helper/helper';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 let movieId = '';
 
 describe('apiRequest.test', () => {
   describe('api request test', () => {
     it('search movies request test', async () => {
-      const response = await axios.get(`${ROOT_URL}/search/movie`, {
+      const response = await axios.get(`${rootUrl}/search/movie`, {
         params: {
           api_key: TMDB_API_KEY,
           query: 'alad',
@@ -42,7 +42,7 @@ describe('apiRequest.test', () => {
     });
 
     it('movies popular request test', async () => {
-      const response = await axios.get(`${ROOT_URL}/movie/popular`, {
+      const response = await axios.get(`${rootUrl}/movie/popular`, {
         params: {
           api_key: TMDB_API_KEY,
           language: 'en-US',
@@ -70,7 +70,7 @@ describe('apiRequest.test', () => {
     });
 
     it('movies details request test', async () => {
-      const response = await axios.get(`${ROOT_URL}/movie/${movieId}`, {
+      const response = await axios.get(`${rootUrl}/movie/${movieId}`, {
         params: {
           api_key: TMDB_API_KEY,
           language: 'en-US',

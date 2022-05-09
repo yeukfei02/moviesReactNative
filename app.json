@@ -2,26 +2,21 @@
   "expo": {
     "name": "Find your movies",
     "slug": "findYourMovies",
-    "platforms": [
-      "ios",
-      "android"
-    ],
-    "version": "1.0.4",
+    "platforms": ["ios", "android"],
+    "version": "1.1.2",
     "orientation": "portrait",
     "icon": "./assets/appstore-icon.png",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "bundleIdentifier": "com.donaldwu.findyourmovies",
-      "buildNumber": "1.0.4"
+      "buildNumber": "1.1.2"
     },
     "android": {
       "package": "com.donaldwu.findyourmovies",
-      "versionCode": 5
+      "versionCode": 6
     },
     "description": "Find your movies",
     "privacy": "public",

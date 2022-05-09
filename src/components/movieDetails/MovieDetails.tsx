@@ -3,11 +3,11 @@ import { StyleSheet, ScrollView, View, Image, Text } from 'react-native';
 import { Card } from 'react-native-paper';
 import axios from 'axios';
 import { TMDB_API_KEY } from 'react-native-dotenv';
-import { getRootUrl } from '../../common/Common';
+import { getRootUrl } from '../../helper/helper';
 
 import StackViewStatusBar from '../stackViewStatusBar/StackViewStatusBar';
 
-const ROOT_URL = getRootUrl();
+const rootUrl = getRootUrl();
 
 const styles = StyleSheet.create({
   container: {
@@ -61,7 +61,7 @@ function MovieDetails(props: any): JSX.Element {
   }, [props.route.params.movieId]);
 
   const getMovieDetails = async (id: number) => {
-    const response = await axios.get(`${ROOT_URL}/movie/${id}`, {
+    const response = await axios.get(`${rootUrl}/movie/${id}`, {
       params: {
         api_key: TMDB_API_KEY,
         language: 'en-US',
